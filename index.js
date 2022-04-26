@@ -10,4 +10,5 @@ const app = express();
 app.use('/cars', carRoutes);
 
 app.use(errorHandler);
-app.listen(3000);
+
+app.listen(3000, ()=> console.log('Server Running'))
