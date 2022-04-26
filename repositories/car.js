@@ -1,8 +1,7 @@
 const db = require('../models');
-const Cars = db.Cars;
 
 const list = async () => {
-  const cars = await Cars.findAll({
+  const cars = await db.Cars.findAll({
     attributes: {exclude:['deletedAt']}
   });
   return cars;
