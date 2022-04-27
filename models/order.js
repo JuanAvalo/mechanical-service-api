@@ -22,6 +22,8 @@ module.exports = (sequelize, DataTypes) => {
       autoIncrement: true,
       allowNull: false,
     },
+    carId: DataTypes.INTEGER,
+    ownerId: DataTypes.INTEGER
   }, {
     sequelize,
     modelName: 'Order',
