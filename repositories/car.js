@@ -7,6 +7,20 @@ const list = async () => {
   return cars;
 };
 
+const create = async (brand, model, year, plate, color) => {
+  const [car, wasCreated] = await db.Cars.findOrCreate({
+    where:{plate: plate},
+    defaults:{
+      brand,
+      model,
+      year,
+      color
+    }    
+  })
+  return {car, wasCreated};
+}
+
 module.exports = {
   list,
+  create
 };

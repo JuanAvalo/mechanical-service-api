@@ -7,6 +7,12 @@ const list = async () => {
   return cars;
 };
 
+const create = async (brand, model, year, plate, color) => {
+    const newCar = await carService.create(brand, model, year, plate, color);
+    return newCar;
+}
+
 module.exports = {
   list,
+  create
 };
