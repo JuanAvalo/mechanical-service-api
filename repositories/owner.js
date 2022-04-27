@@ -1,14 +1,14 @@
 const db = require('../models');
 
 const create = async (firstName, lastName, personalId) => {    
-    const [owner, created ] = await db.Owners.findOrCreate({ 
+    const [owner, wasCreated ] = await db.Owners.findOrCreate({ 
         where: { personalId: personalId },
         defaults:{
             firstName,
             lastName
         }
     })
-    return [owner, created];
+    return {owner, wasCreated};
 }
 
 module.exports = {
