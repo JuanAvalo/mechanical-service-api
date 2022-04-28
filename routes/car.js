@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const asyncHandler = require('../middlewares/asyncHandler');
+const validate = require('../middlewares/validations/car')
 const { list, find, create, destroy, record, patch } = require('../controllers/car');
 
 router.get('/', asyncHandler(async (req, res) => {
@@ -14,13 +15,13 @@ router.get('/:id', asyncHandler(async (req, res) => {
   res.status(200).json({"message": car})
 }))
 
-router.post('/', asyncHandler(async (req, res) => {
+router.post('/',validate.createCar, asyncHandler(async (req, res) => {
   const { ownerId, brand, model, year, plate, color } = req.body;
   const newCar = await create(ownerId, brand, model, year, plate, color);
   res.status(201).json({message: newCar});
 }))
 
-router.patch('/:id', asyncHandler(async (req, res) => {
+router.patch('/:id', validate.updateCar, asyncHandler(async (req, res) => {
   const { ownerId, brand, model, year, plate, color } = req.body;
   const { id } = req.params;
   const updateCar = await patch(id, ownerId, brand, model, year, plate, color);
