@@ -20,6 +20,10 @@ module.exports = (sequelize, DataTypes) => {
         autoIncrement: true,
         allowNull: false,
       },
+      ownerId: {
+        type: DataTypes.INTEGER,
+        allowNull: false
+      },
       brand: {
         type: DataTypes.STRING,
         allowNull: false,
