@@ -5,18 +5,12 @@ const { sequelize } = require('../models');
 
 const create = async (ownerId, carId, servicesId) => {
     const trans = await sequelize.transaction();
-    const ownerCar = await db.Owners.findAll({
-        where:{id: ownerId},
-        include:{
-            model: db.Cars,
-            as: 'Cars',
-            where:{id:carId}
-        }        
-    })
-    if(ownerCar.length === 0) throw new ResourceNotFound('Owner or Car does NOT exists')
+
+    const owner = await db.Owners.findByPk(ownerId)
+    if(!owner) throw new ResourceNotFound('Owner does NOT exists');
     
     const services = await db.Service.findAll({where: {id:{ [Op.in] : servicesId }} })
-    if(!services || services.length !== servicesId.length) throw new ResourceNotFound('Service does NOT exists')
+    if(!services || services.length !== servicesId.length) throw new ResourceNotFound('Service does NOT exists');
     
     try{
         const newOrder = await db.Order.create({
@@ -25,7 +19,8 @@ const create = async (ownerId, carId, servicesId) => {
         },{ transaction: trans });
         await newOrder.addServices(services,{transaction: trans});
         await trans.commit();
-        return ({"order":newOrder, services})
+
+        return ({newOrder, services})
     }
     catch(err) { 
         await trans.rollback()
