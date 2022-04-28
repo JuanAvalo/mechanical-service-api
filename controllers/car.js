@@ -1,5 +1,6 @@
 const carService = require('../services/car');
 const ResourceNotFound = require('../errors/resourceNotFound');
+const BadRequest = require('../errors/badRequest');
 
 const list = async () => {
   const cars = await carService.list();
@@ -29,6 +30,8 @@ const patch = async (id, ownerId, brand, model, year, plate, color) => {
   Object.keys(newData).forEach(key => {
     if(!newData[key]) {delete newData[key]}
   })
+  const noParams = Object.keys(newData).length === 0;
+  if(noParams) throw new BadRequest('Empty Fields')
 
   const updateCar = await carService.patch(id, newData);
   return updateCar;

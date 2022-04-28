@@ -8,7 +8,7 @@ const ownerController = require('../controllers/owner');
 router.post('/', validate.createOwner, asyncHandler(async (req, res) => {
     const { firstName, lastName, personalId } = req.body;
     const newOwner = await ownerController.create(firstName, lastName, personalId);
-    res.status(200).json({'message': newOwner});
+    res.status(201).json({'message': newOwner});
 }))
 
 module.exports = router;

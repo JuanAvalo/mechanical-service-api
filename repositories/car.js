@@ -57,35 +57,29 @@ const patch = async (id, newData) => {
 }
 
 const record = async (id) => {
-  try{
-    const record = await db.Cars.findByPk(
-      id,
-      {
-        attributes:{exclude:['deletedAt','createdAt','updatedAt','OwnerId']},
+  const record = await db.Cars.findByPk(
+    id,
+    {
+      attributes:{exclude:['deletedAt','createdAt','updatedAt','OwnerId']},
+      include:[{
+        model: db.Order,
+        attributes:['id','createdAt'],
         include:[{
-          model: db.Order,
-          attributes:['id','createdAt'],
-          include:[{
-            model: db.Service,
-            attributes:['name'],
-            group:['id'],
-            through:{
-              attributes:[]
-            }
-          }],
-        }]
-      }
-    )
-    return record;
-
-  }
-  catch(err) {console.log(err)}
-  
+          model: db.Service,
+          attributes:['name'],
+          group:['id'],
+          through:{
+            attributes:[]
+          }
+        }],
+      }]
+    }
+  )
+  return record;
 }
 
 const destroy = async (id) => {
   const wasDeleted = await db.Cars.destroy({where: { id: id }});
-  console.log(wasDeleted)
   return wasDeleted;
 }
 
