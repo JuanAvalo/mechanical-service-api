@@ -5,7 +5,7 @@ module.exports = {
   createOwner : [
     check("firstName").notEmpty().withMessage("Owner firstName is required"),
     check("lastName").notEmpty().withMessage("owner lastName is required"),
-    check("personalId").notEmpty().isArray().withMessage("PID is required (number)"),
+    check("personalId").notEmpty().isInt().withMessage("PID is required (number)"),
     errorWrapperFunction,
   ]
 };

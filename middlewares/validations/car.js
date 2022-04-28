@@ -8,10 +8,11 @@ module.exports = {
     check("year").notEmpty().isNumeric().withMessage("Car year is required (number)"),
     check("plate").notEmpty().withMessage("Car plate is required"),
     check("color").notEmpty().withMessage("Car color is required"),
+    check("ownerId").notEmpty().isNumeric().withMessage("Car ownerId is required (number)"),
     errorWrapperFunction,
   ],
   updateCar : [
-    check("year").isNumeric().withMessage("Car year must be a (number)"),
+    check("year").optional().isNumeric().withMessage("Car year must be a (number)"),
     errorWrapperFunction,
   ]
 };
